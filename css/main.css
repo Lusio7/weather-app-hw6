@@ -98,3 +98,93 @@ a:hover {
   font-weight: bold;
 }
 
+/*
+ * DETAILS
+ */
+ 
+ .humidity::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f07a";
+  font-size: 30px;
+}
+
+.pressure::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f079";
+  font-size: 30px;
+}
+
+.wind-speed::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f050";
+  font-size: 30px;
+}
+
+.wind-direction::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f0b1";
+  font-size: 30px;
+}
+
+.visibility::before {
+  display: block;
+  font-family: FontAwesome;
+  content: "\f1e5";
+  font-size: 30px;
+}
+
+.cloud-cover::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f013";
+  font-size: 30px;
+}
+
+.sunrise::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f051";
+  font-size: 30px;
+}
+
+.sunset::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f052";
+  font-size: 30px;
+}
+
+.moonrise::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f0c9";
+  font-size: 30px;
+}
+
+.moonset::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f0ca";
+  font-size: 30px;
+}
+
+.moon-phase i {
+  display: block;
+  height: 45px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.beaufort::before {
+  display: block;
+  font-family: weathericons;
+  content: "\f050";
+  font-size: 30px;
+}
+
