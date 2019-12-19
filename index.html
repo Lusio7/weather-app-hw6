@@ -13,7 +13,28 @@
     <link rel="stylesheet" href="css/weather-icons-wind.min.css">
   </head>
   <body>
-    
+   <!-- BG IMAGE -->
+   <img id="background" class="background" src="css/bg.jpg" alt="background image">
+   
+   <!-- FORM -->
+   <form class="container py-3">
+    <input id="inputCity" class="form-control" type="search" placeholder="City" aria-label="City">
+    <div id="btnToggle" class="d-block my-3">
+      <div class="custom-control custom-radio">
+        <input id="metric" name="unitSystem" type="radio" class="custom-control-input" checked value="metric">
+        <label class="custom-control-label" for="metric">Metric</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input id="imperial" name="unitSystem" type="radio" class="custom-control-input" value="imperial">
+        <label class="custom-control-label" for="imperial">Imperial</label>
+      </div>
+    </div>
+    <div class="form-group row mb-0">
+      <div class="col-sm-12">
+        <button id="submitBtn" class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </div>
+  </form>
 
   </body>
   </html>
