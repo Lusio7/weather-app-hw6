@@ -193,3 +193,13 @@ function loadData(system) {
       
       var locationKey = result[0].Key; // Location key
       var location = result[0].EnglishName; // City name
+
+      var placeIDsResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.places.find&api_key=' + flickrApiKey + '&query=' + location + '&format=json&nojsoncallback=1';
+
+      // Get a list of place IDs (Flickr API: flickr.places.find)
+      $.ajax({
+        url: placeIDsResourceURL,
+        method: 'GET'
+      }).done(function(result) { // Success
+        
+        var placeId = result.places.place[0].place_id; // Place id
