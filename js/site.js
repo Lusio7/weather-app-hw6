@@ -149,3 +149,16 @@ function getBeaufort(windSpeed, system) {
     }
   }
 }
+
+function loadData(system) {
+
+  // CURRENT CONDITIONS
+  var $location = $('#location');
+  var $date = $('#date');
+  var $text = $('#text');
+  var $temp = $('#temp');
+  var $tempScale = $('#tempScale');
+  var $icon = $('#icon');
+  var $realFeel = $('#realFeel');
+  var $uvIndex = $('#uvIndex');
+  var $airQuality = $('#airQuality');
