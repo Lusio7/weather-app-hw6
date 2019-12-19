@@ -1,23 +1,26 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Weather app</title>
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/weather-icons.min.css">
-    <link rel="stylesheet" href="css/weather-icons-wind.min.css">
-  </head>
-  <body>
-   <!-- BG IMAGE -->
-   <img id="background" class="background" src="css/bg.jpg" alt="background image">
-   
-   <!-- FORM -->
-   <form class="container py-3">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Weather app</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/weather-icons.min.css">
+  <link rel="stylesheet" href="css/weather-icons-wind.min.css">
+</head>
+
+<body>
+  <!-- BG IMAGE -->
+  <img id="background" class="background" src="css/bg.jpg" alt="background image">
+
+  <!-- FORM -->
+  <form class="container py-3">
     <input id="inputCity" class="form-control" type="search" placeholder="City" aria-label="City">
     <div id="btnToggle" class="d-block my-3">
       <div class="custom-control custom-radio">
@@ -36,5 +39,25 @@
     </div>
   </form>
 
-  </body>
-  </html>
+  <!-- CURRENT CONDITIONS -->
+  <div class="container current p-3 mt-2">
+    <div id="location" class="location">San Francisco</div>
+    <div id="date" class="date">Wed, 30 May 2018 12:00 PM EEST</div>
+    <div id="text" class="text">T-storms</div>
+    <div class="clearfix">
+      <div class="visual">
+        <img id="icon" src="icons/conditions/41.svg" width="100" height="100">
+        <div id="temp" class="temp d-inline-block align-top">-11</div>
+        <div id="tempScale" class="temp-scale d-inline-block align-top">&#8451;</div>
+      </div>
+      <div class="current-details">
+        <div id="realFeel" class="real-feel">-12 ℃</div>
+        <div id="uvIndex" class="uv-index">4, Moderate</div>
+        <div id="airQuality" class="air-quality">Good</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
