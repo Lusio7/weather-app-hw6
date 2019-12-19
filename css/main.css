@@ -35,3 +35,45 @@ a:hover {
 .container {
   max-width: 500px;
 }
+
+/*
+ * CURRENT CONDITIONS
+ */
+
+ .location {
+  font-size: 2.5rem;
+}
+
+.visual {
+  margin-right: 1rem;
+}
+
+.visual .temp {
+  font-size: 4rem;
+}
+
+.visual .temp-scale {
+  font-size: 1.5rem;
+  margin-top: 15px;
+}
+
+.visual {
+  float: none;
+}
+
+.current-details {
+  float: none;
+}
+
+.real-feel::before {
+  content: "RealFeel®: ";
+}
+
+.uv-index::before {
+  content: "UV-index: ";
+}
+
+.air-quality::before {
+  content: "Air quality: ";
+}
+
