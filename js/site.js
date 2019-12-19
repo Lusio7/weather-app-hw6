@@ -203,3 +203,16 @@ function loadData(system) {
       }).done(function(result) { // Success
         
         var placeId = result.places.place[0].place_id; // Place id
+
+        var photosResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + flickrApiKey + '&tags=city&content_type=1&place_id=' + placeId + '&format=json&nojsoncallback=1';
+
+        // Get a list of photos (Flickr API: flickr.photos.search)
+        $.ajax({
+          url: photosResourceURL,
+          method: 'GET'
+        }).done(function(result) { // Success
+          
+          var photoId = result.photos.photo[0].id;
+
+          var photoSizesResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=' + flickrApiKey + '&photo_id=' + photoId + '&format=json&nojsoncallback=1';
+
