@@ -77,3 +77,16 @@ a:hover {
   content: "Air quality: ";
 }
 
+/* 
+ * HOURLY FORECAST
+ */
+
+ .hourly-forecast {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.hourly-forecast div {
+  display: inline-block;
+}
+
