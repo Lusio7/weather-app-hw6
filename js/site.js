@@ -244,3 +244,24 @@ function loadData(system) {
       
       var currentConditionsResourceURL = 'https://dataservice.accuweather.com/currentconditions/v1/' + locationKey + '?apikey=' + accuweatherApiKey + '&details=true';
 
+      // Get current conditions (Accuweather Current Conditions API)
+      $.ajax({
+        url: currentConditionsResourceURL,
+        method: 'GET'
+      }).done(function(result) { // Success
+        
+        var date = formatDate(result[0].LocalObservationDateTime);
+        var text = result[0].WeatherText;
+        var temp;
+        var tempScale;
+        var icon = 'icons/conditions/' + result[0].WeatherIcon + '.svg';
+        var realFeel;
+        var uvIndex = result[0].UVIndex + ', ' + result[0].UVIndexText;
+        var humidity = result[0].RelativeHumidity + '%';
+        var pressure;
+        var windSpeed;
+        var beaufort;
+        var windDirection;
+        var visibility;
+        var cloudCover = result[0].CloudCover + '%';
+
