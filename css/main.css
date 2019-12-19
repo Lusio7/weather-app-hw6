@@ -90,3 +90,11 @@ a:hover {
   display: inline-block;
 }
 
+/*
+ * MAIN FORECAST
+ */
+
+ .temp-high, .precip-day {
+  font-weight: bold;
+}
+
