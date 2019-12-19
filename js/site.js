@@ -265,3 +265,25 @@ function loadData(system) {
         var visibility;
         var cloudCover = result[0].CloudCover + '%';
 
+        // Metric
+        if (system === 'metric') {
+          temp = Math.round(result[0].Temperature.Metric.Value).toString();
+          tempScale = '℃';
+          realFeel = Math.round(result[0].RealFeelTemperature.Metric.Value).toString() + ' ℃';
+          pressure = Math.round(result[0].Pressure.Metric.Value).toString() + ' mb';
+          windSpeed = Math.round(result[0].Wind.Speed.Metric.Value).toString() + ' km/h';
+          beaufort = getBeaufort(Math.round(result[0].Wind.Speed.Metric.Value), system) + ' B';
+          windDirection = result[0].Wind.Direction.Degrees + '°' + ' (' + result[0].Wind.Direction.English + ')';
+          visibility = Math.round(result[0].Visibility.Metric.Value).toString() + ' km';
+        }
+        // Imperial
+        else {
+          temp = Math.round(result[0].Temperature.Imperial.Value).toString();
+          tempScale = '°F';
+          realFeel = Math.round(result[0].RealFeelTemperature.Imperial.Value).toString() + ' °F';
+          pressure = Math.round(result[0].Pressure.Imperial.Value).toString() + ' inHg';
+          windSpeed = Math.round(result[0].Wind.Speed.Imperial.Value).toString() + ' mph';
+          beaufort = getBeaufort(Math.round(result[0].Wind.Speed.Imperial.Value), system) + ' B';
+          windDirection = result[0].Wind.Direction.Degrees + '°' + ' (' + result[0].Wind.Direction.English + ')';
+          visibility = Math.round(result[0].Visibility.Imperial.Value).toString() + ' mi';
+
