@@ -188,3 +188,47 @@ a:hover {
   font-size: 30px;
 }
 
+/*
+ * FOOTER
+ */
+
+ footer {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 12px;
+}
+
+.fa.fa-code {
+  position: relative;
+  top: 1px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.fa.fa-heart {
+  position: relative;
+  top: 1px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.fa.fa-bolt {
+  position: relative;
+  top: 1px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+@media (min-width: 440px) {
+  .visual {
+    float: left;
+  }
+
+  .current-details {
+    float: right;
+    margin-top: 1rem;
+  }
+}
