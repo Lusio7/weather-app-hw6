@@ -64,3 +64,88 @@ function getMoonPhaseClass(age) {
   phase[27] = "wi-moon-waning-crescent-6";
   return phase[age-1];
 }
+
+function getBeaufort(windSpeed, system) {
+  if (system === 'metric') {
+    if (windSpeed < 1) {
+      return '0';
+    }
+    else if (windSpeed <= 5) {
+      return '1';
+    }
+    else if (windSpeed <= 11) {
+      return '2';
+    }
+    else if (windSpeed <= 19) {
+      return '3';
+    }
+    else if (windSpeed <= 28) {
+      return '4';
+    }
+    else if (windSpeed <= 38) {
+      return '5';
+    }
+    else if (windSpeed <= 49) {
+      return '6';
+    }
+    else if (windSpeed <= 61) {
+      return '7';
+    }
+    else if (windSpeed <= 74) {
+      return '8';
+    }
+    else if (windSpeed <= 88) {
+      return '9';
+    }
+    else if (windSpeed <= 102) {
+      return '10';
+    }
+    else if (windSpeed <= 117) {
+      return '11';
+    }
+    else {
+      return '12';
+    }
+  }
+  else {
+    if (windSpeed < 1) {
+      return '0';
+    }
+    else if (windSpeed <= 3) {
+      return '1';
+    }
+    else if (windSpeed <= 7) {
+      return '2';
+    }
+    else if (windSpeed <= 12) {
+      return '3';
+    }
+    else if (windSpeed <= 18) {
+      return '4';
+    }
+    else if (windSpeed <= 24) {
+      return '5';
+    }
+    else if (windSpeed <= 31) {
+      return '6';
+    }
+    else if (windSpeed <= 38) {
+      return '7';
+    }
+    else if (windSpeed <= 46) {
+      return '8';
+    }
+    else if (windSpeed <= 54) {
+      return '9';
+    }
+    else if (windSpeed <= 63) {
+      return '10';
+    }
+    else if (windSpeed <= 72) {
+      return '11';
+    }
+    else {
+      return '12';
+    }
+  }
+}
