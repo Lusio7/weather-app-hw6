@@ -162,3 +162,18 @@ function loadData(system) {
   var $realFeel = $('#realFeel');
   var $uvIndex = $('#uvIndex');
   var $airQuality = $('#airQuality');
+
+   // DETAILS
+   var $humidity = $('#humidity');
+   var $pressure = $('#pressure');
+   var $windSpeed = $('#windSpeed');
+   var $windDirection = $('#windDirection');
+   var $visibility = $('#visibility');
+   var $cloudCover = $('#cloudCover');
+   var $sunrise = $('#sunrise');
+   var $sunset = $('#sunset');
+   var $moonrise = $('#moonrise');
+   var $moonset = $('#moonset');
+   var $moonPhase = $('#moonPhase');
+   var $beaufort = $('#beaufort');
+   var $background = $('#background');
