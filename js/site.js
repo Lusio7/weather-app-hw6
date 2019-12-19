@@ -342,3 +342,70 @@ function loadData(system) {
           $hourlyTemp.text(hourlyTemp);
         }
 
+      }).fail(function(err) { // Error handling
+        console.log("error");
+        throw err;
+      });
+
+      // Get main forecast (Accuweather Forecast API)
+      $.ajax({
+        url: forecastResourceURL,
+        method: 'GET'
+      }).done(function(result) { // Success
+        
+        var airQuality = result.DailyForecasts[0].AirAndPollen[0].Category;
+        var sunrise = getTime(result.DailyForecasts[0].Sun.Rise);
+        var sunset = getTime(result.DailyForecasts[0].Sun.Set);
+        var moonrise = getTime(result.DailyForecasts[0].Moon.Rise);
+        var moonset = getTime(result.DailyForecasts[0].Moon.Set);
+        var moonPhase = '<i class="wi ' + getMoonPhaseClass(result.DailyForecasts[0].Moon.Age) + '"></i>' + result.DailyForecasts[0].Moon.Phase.replace(/([A-Z])/g, ' $1');
+        
+        $airQuality.text(airQuality);
+        $sunrise.text(sunrise);
+        $sunset.text(sunset);
+        $moonrise.text(moonrise);
+        $moonset.text(moonset);
+        $moonPhase.empty();
+        $moonPhase.append(moonPhase);
+
+        for (var i = 0; i < 5; i++) {
+          var day = getDay(result.DailyForecasts[i].Date);
+          var icon = 'icons/conditions/' + result.DailyForecasts[i].Day.Icon + '.svg';
+          var tempHigh = Math.round(result.DailyForecasts[i].Temperature.Maximum.Value).toString() + '°';
+          var tempLow = Math.round(result.DailyForecasts[i].Temperature.Minimum.Value).toString() + '°';
+          var precipDay = result.DailyForecasts[i].Day.PrecipitationProbability + '%';
+          var precipNight = result.DailyForecasts[i].Night.PrecipitationProbability + '%';
+
+          var $day = $('#day-' + i);
+          var $icon = $('#icon-' + i);
+          var $tempHigh = $('#temp-high-' + i);
+          var $tempLow = $('#temp-low-' + i);
+          var $precipDay = $('#precip-day-' + i);
+          var $precipNight = $('#precip-night-' + i);
+
+          $day.text(day);
+          $icon.attr('src', icon);
+          $tempHigh.text(tempHigh);
+          $tempLow.text(tempLow);
+          $precipDay.text(precipDay);
+          $precipNight.text(precipNight);
+        }
+      }).fail(function(err) { // Error handling
+        console.log("error");
+        throw err;
+      });
+
+    }).fail(function(err) { // Error handling
+      console.log("error");
+      throw err;
+    });
+
+    return false;
+}
+
+$('form').submit(function(event) {
+  event.preventDefault();
+  var system = $('input[name="unitSystem"]:checked').val(); // Metric or Imperial
+  loadData(system);
+});
+
