@@ -62,7 +62,7 @@ function getMoonPhaseClass(age) {
   phase[25] = "wi-moon-waning-crescent-4";
   phase[26] = "wi-moon-waning-crescent-5";
   phase[27] = "wi-moon-waning-crescent-6";
-  return phase[age-1];
+  return phase[age - 1];
 }
 
 function getBeaufort(windSpeed, system) {
@@ -163,127 +163,148 @@ function loadData(system) {
   var $uvIndex = $('#uvIndex');
   var $airQuality = $('#airQuality');
 
-   // DETAILS
-   var $humidity = $('#humidity');
-   var $pressure = $('#pressure');
-   var $windSpeed = $('#windSpeed');
-   var $windDirection = $('#windDirection');
-   var $visibility = $('#visibility');
-   var $cloudCover = $('#cloudCover');
-   var $sunrise = $('#sunrise');
-   var $sunset = $('#sunset');
-   var $moonrise = $('#moonrise');
-   var $moonset = $('#moonset');
-   var $moonPhase = $('#moonPhase');
-   var $beaufort = $('#beaufort');
-   var $background = $('#background');
+  // DETAILS
+  var $humidity = $('#humidity');
+  var $pressure = $('#pressure');
+  var $windSpeed = $('#windSpeed');
+  var $windDirection = $('#windDirection');
+  var $visibility = $('#visibility');
+  var $cloudCover = $('#cloudCover');
+  var $sunrise = $('#sunrise');
+  var $sunset = $('#sunset');
+  var $moonrise = $('#moonrise');
+  var $moonset = $('#moonset');
+  var $moonPhase = $('#moonPhase');
+  var $beaufort = $('#beaufort');
+  var $background = $('#background');
 
-   var inputCity = $('#inputCity').val();
-   //var accuweatherApiKey = "eOYiiAjNR0EuRaIGNoxAlXQQLn56cQMb"; // Accuweather api key
-   var accuweatherApiKey = "KrnJm3pGAtha40EFim82KLEqvaikzMeS"; // Accuweather api key
-   var flickrApiKey = "8df7b25e698caeac3e6711c1c46140b1"; // Flickr api key
+  var inputCity = $('#inputCity').val();
+  //var accuweatherApiKey = "eOYiiAjNR0EuRaIGNoxAlXQQLn56cQMb"; // Accuweather api key
+  var accuweatherApiKey = "KrnJm3pGAtha40EFim82KLEqvaikzMeS"; // Accuweather api key
+  var flickrApiKey = "8df7b25e698caeac3e6711c1c46140b1"; // Flickr api key
 
-   var locationResourceURL = 'https://dataservice.accuweather.com/locations/v1/cities/search?apikey=' + accuweatherApiKey + '&q=' + inputCity;
+  var locationResourceURL = 'https://dataservice.accuweather.com/locations/v1/cities/search?apikey=' + accuweatherApiKey + '&q=' + inputCity;
 
-    // Get location key (Accuweather Location API)
+  // Get location key (Accuweather Location API)
+  $.ajax({
+    url: locationResourceURL,
+    method: 'GET'
+  }).done(function (result) { // Success
+
+    var locationKey = result[0].Key; // Location key
+    var location = result[0].EnglishName; // City name
+
+    var placeIDsResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.places.find&api_key=' + flickrApiKey + '&query=' + location + '&format=json&nojsoncallback=1';
+
+    // Get a list of place IDs (Flickr API: flickr.places.find)
     $.ajax({
-      url: locationResourceURL,
+      url: placeIDsResourceURL,
       method: 'GET'
-    }).done(function(result) { // Success
-      
-      var locationKey = result[0].Key; // Location key
-      var location = result[0].EnglishName; // City name
+    }).done(function (result) { // Success
 
-      var placeIDsResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.places.find&api_key=' + flickrApiKey + '&query=' + location + '&format=json&nojsoncallback=1';
+      var placeId = result.places.place[0].place_id; // Place id
 
-      // Get a list of place IDs (Flickr API: flickr.places.find)
+      var photosResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + flickrApiKey + '&tags=city&content_type=1&place_id=' + placeId + '&format=json&nojsoncallback=1';
+
+      // Get a list of photos (Flickr API: flickr.photos.search)
       $.ajax({
-        url: placeIDsResourceURL,
+        url: photosResourceURL,
         method: 'GET'
-      }).done(function(result) { // Success
-        
-        var placeId = result.places.place[0].place_id; // Place id
+      }).done(function (result) { // Success
 
-        var photosResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + flickrApiKey + '&tags=city&content_type=1&place_id=' + placeId + '&format=json&nojsoncallback=1';
+        var photoId = result.photos.photo[0].id;
 
-        // Get a list of photos (Flickr API: flickr.photos.search)
+        var photoSizesResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=' + flickrApiKey + '&photo_id=' + photoId + '&format=json&nojsoncallback=1';
+
+        // Get the available sizes for a photo (Flickr API: flickr.photos.getSizes)
         $.ajax({
-          url: photosResourceURL,
+          url: photoSizesResourceURL,
           method: 'GET'
-        }).done(function(result) { // Success
-          
-          var photoId = result.photos.photo[0].id;
+        }).done(function (result) {
 
-          var photoSizesResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=' + flickrApiKey + '&photo_id=' + photoId + '&format=json&nojsoncallback=1';
+          var len = result.sizes['size'].length;
+          var photoURL = result.sizes['size'][len - 2].source;
 
-          // Get the available sizes for a photo (Flickr API: flickr.photos.getSizes)
-          $.ajax({
-            url: photoSizesResourceURL,
-            method: 'GET'
-          }).done(function(result) {
+          $background.attr("src", photoURL); // Set background image
 
-            var len = result.sizes['size'].length;
-            var photoURL = result.sizes['size'][len - 2].source;
-
-            $background.attr("src", photoURL); // Set background image
-            
-          }).fail(function(err) { // Error handling
-            console.log("error");
-            throw err;
-          });
-
-        }).fail(function(err) { // Error handling
+        }).fail(function (err) { // Error handling
           console.log("error");
           throw err;
         });
 
-      }).fail(function(err) { // Error handling
+      }).fail(function (err) { // Error handling
         console.log("error");
         throw err;
       });
-      
-      var currentConditionsResourceURL = 'https://dataservice.accuweather.com/currentconditions/v1/' + locationKey + '?apikey=' + accuweatherApiKey + '&details=true';
 
-      // Get current conditions (Accuweather Current Conditions API)
-      $.ajax({
-        url: currentConditionsResourceURL,
-        method: 'GET'
-      }).done(function(result) { // Success
-        
-        var date = formatDate(result[0].LocalObservationDateTime);
-        var text = result[0].WeatherText;
-        var temp;
-        var tempScale;
-        var icon = 'icons/conditions/' + result[0].WeatherIcon + '.svg';
-        var realFeel;
-        var uvIndex = result[0].UVIndex + ', ' + result[0].UVIndexText;
-        var humidity = result[0].RelativeHumidity + '%';
-        var pressure;
-        var windSpeed;
-        var beaufort;
-        var windDirection;
-        var visibility;
-        var cloudCover = result[0].CloudCover + '%';
+    }).fail(function (err) { // Error handling
+      console.log("error");
+      throw err;
+    });
 
-        // Metric
-        if (system === 'metric') {
-          temp = Math.round(result[0].Temperature.Metric.Value).toString();
-          tempScale = '℃';
-          realFeel = Math.round(result[0].RealFeelTemperature.Metric.Value).toString() + ' ℃';
-          pressure = Math.round(result[0].Pressure.Metric.Value).toString() + ' mb';
-          windSpeed = Math.round(result[0].Wind.Speed.Metric.Value).toString() + ' km/h';
-          beaufort = getBeaufort(Math.round(result[0].Wind.Speed.Metric.Value), system) + ' B';
-          windDirection = result[0].Wind.Direction.Degrees + '°' + ' (' + result[0].Wind.Direction.English + ')';
-          visibility = Math.round(result[0].Visibility.Metric.Value).toString() + ' km';
-        }
-        // Imperial
-        else {
-          temp = Math.round(result[0].Temperature.Imperial.Value).toString();
-          tempScale = '°F';
-          realFeel = Math.round(result[0].RealFeelTemperature.Imperial.Value).toString() + ' °F';
-          pressure = Math.round(result[0].Pressure.Imperial.Value).toString() + ' inHg';
-          windSpeed = Math.round(result[0].Wind.Speed.Imperial.Value).toString() + ' mph';
-          beaufort = getBeaufort(Math.round(result[0].Wind.Speed.Imperial.Value), system) + ' B';
-          windDirection = result[0].Wind.Direction.Degrees + '°' + ' (' + result[0].Wind.Direction.English + ')';
-          visibility = Math.round(result[0].Visibility.Imperial.Value).toString() + ' mi';
+    var currentConditionsResourceURL = 'https://dataservice.accuweather.com/currentconditions/v1/' + locationKey + '?apikey=' + accuweatherApiKey + '&details=true';
+
+    // Get current conditions (Accuweather Current Conditions API)
+    $.ajax({
+      url: currentConditionsResourceURL,
+      method: 'GET'
+    }).done(function (result) { // Success
+
+      var date = formatDate(result[0].LocalObservationDateTime);
+      var text = result[0].WeatherText;
+      var temp;
+      var tempScale;
+      var icon = 'icons/conditions/' + result[0].WeatherIcon + '.svg';
+      var realFeel;
+      var uvIndex = result[0].UVIndex + ', ' + result[0].UVIndexText;
+      var humidity = result[0].RelativeHumidity + '%';
+      var pressure;
+      var windSpeed;
+      var beaufort;
+      var windDirection;
+      var visibility;
+      var cloudCover = result[0].CloudCover + '%';
+
+      // Metric
+      if (system === 'metric') {
+        temp = Math.round(result[0].Temperature.Metric.Value).toString();
+        tempScale = '℃';
+        realFeel = Math.round(result[0].RealFeelTemperature.Metric.Value).toString() + ' ℃';
+        pressure = Math.round(result[0].Pressure.Metric.Value).toString() + ' mb';
+        windSpeed = Math.round(result[0].Wind.Speed.Metric.Value).toString() + ' km/h';
+        beaufort = getBeaufort(Math.round(result[0].Wind.Speed.Metric.Value), system) + ' B';
+        windDirection = result[0].Wind.Direction.Degrees + '°' + ' (' + result[0].Wind.Direction.English + ')';
+        visibility = Math.round(result[0].Visibility.Metric.Value).toString() + ' km';
+      }
+      // Imperial
+      else {
+        temp = Math.round(result[0].Temperature.Imperial.Value).toString();
+        tempScale = '°F';
+        realFeel = Math.round(result[0].RealFeelTemperature.Imperial.Value).toString() + ' °F';
+        pressure = Math.round(result[0].Pressure.Imperial.Value).toString() + ' inHg';
+        windSpeed = Math.round(result[0].Wind.Speed.Imperial.Value).toString() + ' mph';
+        beaufort = getBeaufort(Math.round(result[0].Wind.Speed.Imperial.Value), system) + ' B';
+        windDirection = result[0].Wind.Direction.Degrees + '°' + ' (' + result[0].Wind.Direction.English + ')';
+        visibility = Math.round(result[0].Visibility.Imperial.Value).toString() + ' mi';
+
+        $location.text(location);
+        $date.text(date);
+        $text.text(text);
+        $temp.text(temp);
+        $tempScale.text(tempScale);
+        $icon.attr("src", icon);
+        $realFeel.text(realFeel);
+        $uvIndex.text(uvIndex);
+        $humidity.text(humidity);
+        $pressure.text(pressure);
+        $windSpeed.text(windSpeed);
+        $beaufort.text(beaufort);
+        $windDirection.text(windDirection);
+        $visibility.text(visibility);
+        $cloudCover.text(cloudCover);
+
+      }).fail(function (err) { // Error handling
+        console.log("error");
+        throw err;
+      });
 
