@@ -17,3 +17,17 @@ function getDay(string) {
   var day = date.getDay();
   return weekday[day];
 }
+
+function getTime(string) {
+  var date = new Date(string);
+  var hours = date.getHours();
+  if (hours < 10) {
+    hours = '0' + hours;
+  }
+  var minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = '0' + minutes;
+  }
+  var time = hours + ':' + minutes;
+  return time;
+}
