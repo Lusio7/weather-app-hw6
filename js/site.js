@@ -216,3 +216,31 @@ function loadData(system) {
 
           var photoSizesResourceURL = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=' + flickrApiKey + '&photo_id=' + photoId + '&format=json&nojsoncallback=1';
 
+          // Get the available sizes for a photo (Flickr API: flickr.photos.getSizes)
+          $.ajax({
+            url: photoSizesResourceURL,
+            method: 'GET'
+          }).done(function(result) {
+
+            var len = result.sizes['size'].length;
+            var photoURL = result.sizes['size'][len - 2].source;
+
+            $background.attr("src", photoURL); // Set background image
+            
+          }).fail(function(err) { // Error handling
+            console.log("error");
+            throw err;
+          });
+
+        }).fail(function(err) { // Error handling
+          console.log("error");
+          throw err;
+        });
+
+      }).fail(function(err) { // Error handling
+        console.log("error");
+        throw err;
+      });
+      
+      var currentConditionsResourceURL = 'https://dataservice.accuweather.com/currentconditions/v1/' + locationKey + '?apikey=' + accuweatherApiKey + '&details=true';
+
