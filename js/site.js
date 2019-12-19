@@ -308,3 +308,37 @@ function loadData(system) {
         throw err;
       });
 
+      var forecastResourceURL;
+      var hourlyForecastResourseURL;
+
+      // Metric
+      if (system === 'metric') {
+        forecastResourceURL = 'https://dataservice.accuweather.com/forecasts/v1/daily/5day/' + locationKey + '?apikey=' + accuweatherApiKey + '&details=true' + '&metric=true';
+        hourlyForecastResourseURL = 'https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/' + locationKey + '?apikey=' + accuweatherApiKey + '&metric=true';
+      }
+      // Imperial
+      else {
+        forecastResourceURL = 'https://dataservice.accuweather.com/forecasts/v1/daily/5day/' + locationKey + '?apikey=' + accuweatherApiKey + '&details=true' + '&metric=false';
+        hourlyForecastResourseURL = 'https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/' + locationKey + '?apikey=' + accuweatherApiKey + '&metric=true';
+      }
+
+      // Get hourly forecast (Accuweather Forecast API)
+      $.ajax({
+        url: hourlyForecastResourseURL,
+        method: 'GET'
+      }).done(function(result) { // Success
+
+        for (var i = 0; i < 12; i++) {
+          var time = getTime(result[i].DateTime);
+          var hourlyIcon = 'icons/conditions/' + result[i].WeatherIcon + '.svg';
+          var hourlyTemp = Math.round(result[i].Temperature.Value).toString() + '°';
+
+          var $time = $('#time-' + i);
+          var $hourlyIcon = $('#hourly-icon-' + i);
+          var $hourlyTemp = $('#hourly-temp-' + i);
+
+          $time.text(time);
+          $hourlyIcon.attr('src', hourlyIcon);
+          $hourlyTemp.text(hourlyTemp);
+        }
+
