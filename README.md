@@ -1,4 +1,4 @@
-# WeatherForecastAppHW6
+# WeatherForecastAppHW6 See App Here: https://lusio7.github.io/weather-app-hw6/
 A weather app built with jQuery using the AccuWeather and Flickr APIs. The app features current weather conditions, hourly and 5-day forecasts as well as miscellaneous information such as UV-index, air quality, visibility, cloud coverage, moon phase, and many more.
 
 ## Features
